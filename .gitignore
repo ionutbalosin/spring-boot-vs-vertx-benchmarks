@@ -1,7 +1,6 @@
 .gradle
 **/build/
 **/target/
-**/benchmarks/
 **/out/
 **/*.log
 !gradle/wrapper/gradle-wrapper.jar
