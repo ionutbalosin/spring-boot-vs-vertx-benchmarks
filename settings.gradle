@@ -2,3 +2,4 @@ rootProject.name = 'spring-boot-vs-vertx-benchmarks'
 
 include 'vanilla-vertx'
 include 'vanilla-spring-boot'
+include 'benchmarks'

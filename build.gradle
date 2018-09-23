@@ -4,29 +4,32 @@ buildscript {
         springBootVersion = '2.0.4.RELEASE'
         springCloudVersion = 'Finchley.SR1'
         springZuulVersion = '2.0.0.M2'
+        jmhVersion = '1.21'
     }
 
     repositories {
         jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
     }
 
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("me.champeau.gradle:jmh-gradle-plugin:0.4.7")
+        classpath("gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.3.11")
     }
 
 }
 
 allprojects {
-    group = 'org.ib.spring'
+    group = 'org.ib'
     version = '0.0.1-SNAPSHOT'
 }
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: 'eclipse'
-    
-    dependencies {
-    }
+    apply plugin: "org.jetbrains.intellij"
 
     repositories {
         jcenter()
@@ -51,7 +54,7 @@ project(':vanilla-vertx') {
         compile('io.vertx:vertx-web:3.5.3')
         compile('org.apache.logging.log4j:log4j-api:2.7')
         compile('org.apache.logging.log4j:log4j-core:2.7')
-        compile('com.lmax:disruptor:3.3.6') // asynch logging
+        compile('com.lmax:disruptor:3.3.6') // for asynch logging
     }
 }
 
@@ -67,5 +70,14 @@ project(':vanilla-spring-boot') {
     
     dependencies {
         compile('org.springframework.boot:spring-boot-starter-web')    
+    }
+}
+
+project(':benchmarks') {
+    apply plugin: "me.champeau.gradle.jmh"
+
+    dependencies {
+        compile("org.openjdk.jmh:jmh-core:${jmhVersion}")
+        compile("org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}")
     }
 }
