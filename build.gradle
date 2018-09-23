@@ -76,8 +76,14 @@ project(':vanilla-spring-boot') {
 project(':benchmarks') {
     apply plugin: "me.champeau.gradle.jmh"
 
+    // See https://github.com/melix/jmh-gradle-plugin/issues/125
+    //tasks.getByName('jmhJar').doFirst() {duplicatesStrategy(DuplicatesStrategy.EXCLUDE)}
+    //jmh {
+    //   duplicateClassesStrategy = 'exclude'
+    //}
+
     dependencies {
         compile("org.openjdk.jmh:jmh-core:${jmhVersion}")
-        compile("org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}")
+        //compile("org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}")
     }
 }
