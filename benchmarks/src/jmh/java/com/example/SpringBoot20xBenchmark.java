@@ -2,8 +2,8 @@ package com.example;
 
 import org.openjdk.jmh.annotations.*;
 
-@Measurement(iterations = 5)
-@Warmup(iterations = 2)
+@Measurement(iterations = 1)
+@Warmup(iterations = 1)
 @Fork(value = 2, warmups = 0)
 @BenchmarkMode(Mode.AverageTime)
 public class SpringBoot20xBenchmark {

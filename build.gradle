@@ -29,7 +29,9 @@ allprojects {
 
 subprojects {
     apply plugin: 'java'
-    apply plugin: "org.jetbrains.intellij"
+    apply plugin: 'idea'
+
+    defaultTasks 'clean', 'build'
 
     repositories {
         jcenter()
@@ -76,11 +78,26 @@ project(':vanilla-spring-boot') {
 project(':benchmarks') {
     apply plugin: "me.champeau.gradle.jmh"
 
-    // See https://github.com/melix/jmh-gradle-plugin/issues/125
-    //tasks.getByName('jmhJar').doFirst() {duplicatesStrategy(DuplicatesStrategy.EXCLUDE)}
-    //jmh {
-    //   duplicateClassesStrategy = 'exclude'
-    //}
+    jmh {
+
+        // > Below options fix the issue regarding <failed to invoke the VM, caught IOException: Cannot run program "$JAVA_HOME\java.exe": CreateProcess error=206, The filename or extension is too long>
+        verbosity = 'EXTRA'
+        jvmArgs = ['-Djmh.separateClasspathJAR=true']
+        include = '.*SpringBoot20xBenchmark.*'
+
+        // > JMH Settings
+        //warmupIterations = 2
+        //iterations = 5
+        //fork = 2
+        //timeUnit = 's'
+        //timeOnIteration = '10s'
+
+        // > GC Settings
+        //forceGC = true // Should JMH force GC between iterations?
+        //jvmArgs = "-XX:+UnlockCommercialFeatures -XX:+FlightRecorder -XX:+UnlockDiagnosticVMOptions -XX:+DebugNonSafepoints -XX:StartFlightRecording=duration=60s,delay=30s,filename=recording.jfr"
+        //jvmArgs = '-XX:+UseG1GC'
+        //jvmArgs = "-verbose:gc -Xloggc:/dev/shm/jvm.log -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+PrintTenuringDistribution -XX:+PrintGCApplicationStoppedTime -XX:+PrintTLAB"
+    }
 
     dependencies {
         compile("org.openjdk.jmh:jmh-core:${jmhVersion}")

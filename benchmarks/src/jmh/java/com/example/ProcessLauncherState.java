@@ -59,6 +59,7 @@ public class ProcessLauncherState {
 			this.args.addAll(4,
 					Arrays.asList(System.getProperty("bench.args").split(" ")));
 		}
+		System.out.println("CURRENT_ABSOLUTE_PATH=" + new File(".").getAbsolutePath());
 		this.home = new File(dir);
 	}
 
