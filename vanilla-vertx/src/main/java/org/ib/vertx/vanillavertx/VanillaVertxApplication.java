@@ -2,12 +2,13 @@ package org.ib.vertx.vanillavertx;
 
 import io.vertx.core.*;
 import io.vertx.core.http.HttpServer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.apache.log4j.Logger;
 
 public class VanillaVertxApplication extends AbstractVerticle {
 
-    private static final Logger logger = LogManager.getLogger(VanillaVertxApplication.class);
+    public final static Logger logger = Logger.getLogger(VanillaVertxApplication.class);
+
     static Vertx vertx = Vertx.vertx();
     private HttpServer server;
 
