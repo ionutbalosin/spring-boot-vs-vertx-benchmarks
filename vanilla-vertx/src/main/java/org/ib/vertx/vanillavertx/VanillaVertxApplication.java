@@ -16,7 +16,7 @@ public class VanillaVertxApplication extends AbstractVerticle {
         vertx.deployVerticle(new VanillaVertxApplication(), new Handler<AsyncResult<String>>() {
             @Override
             public void handle(AsyncResult<String> stringAsyncResult) {
-                logger.info("Verticle deployment complete");
+                logger.info("Verticle Deployment Complete");
             }
         });
     }
