@@ -43,11 +43,11 @@ public class VanillaVertxApplication extends AbstractVerticle {
                 startFuture.fail(res.cause());
             }
         });
-        logger.info("Verticle started");
+        logger.info("Verticle Started");
     }
 
     @Override
     public void stop() throws Exception {
-        logger.info("Verticle stopped");
+        logger.info("Verticle Stopped");
     }
 }

@@ -15,11 +15,10 @@
  */
 package com.example;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import org.openjdk.jmh.util.FileUtils;
+import org.openjdk.jmh.util.Utils;
+
+import java.io.*;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,9 +30,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.openjdk.jmh.util.FileUtils;
-import org.openjdk.jmh.util.Utils;
 
 public class ProcessLauncherState {
 
@@ -59,7 +55,7 @@ public class ProcessLauncherState {
 			this.args.addAll(4,
 					Arrays.asList(System.getProperty("bench.args").split(" ")));
 		}
-		System.out.println("CURRENT_ABSOLUTE_PATH=" + new File(".").getAbsolutePath());
+		//System.out.println("CURRENT_ABSOLUTE_PATH=" + new File(".").getAbsolutePath());
 		this.home = new File(dir);
 	}
 

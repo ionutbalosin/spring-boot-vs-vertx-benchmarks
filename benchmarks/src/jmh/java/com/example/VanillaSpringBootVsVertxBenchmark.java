@@ -6,9 +6,9 @@ import org.openjdk.jmh.annotations.*;
 @Warmup(iterations = 1)
 @Fork(value = 2, warmups = 0)
 @BenchmarkMode(Mode.AverageTime)
-public class SpringBoot20xBenchmark {
+public class VanillaSpringBootVsVertxBenchmark {
 
-	//@Benchmark
+	@Benchmark
 	public void vanillaSpringBoot(VanillaSpringBootState state) throws Exception {
 		state.run();
 	}

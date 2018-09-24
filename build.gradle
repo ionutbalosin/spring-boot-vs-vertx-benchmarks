@@ -17,7 +17,7 @@ buildscript {
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
         classpath("me.champeau.gradle:jmh-gradle-plugin:0.4.7")
-        classpath("gradle.plugin.org.jetbrains.intellij.plugins:gradle-intellij-plugin:0.3.11")
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
     }
 
 }
@@ -51,6 +51,19 @@ subprojects {
 }
 
 project(':vanilla-vertx') {
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    shadowJar {
+        classifier = 'fat'
+        mergeServiceFiles {
+            include 'META-INF/services/io.vertx.core.spi.VerticleFactory'
+        }
+        archiveName = "${baseName}-${version}.${extension}"
+        manifest {
+            attributes 'Main-Class': 'org.ib.vertx.vanillavertx.VanillaVertxApplication'
+        }
+    }
+
     dependencies {
         compile('io.vertx:vertx-core:3.5.3')
         compile('io.vertx:vertx-web:3.5.3')
@@ -58,6 +71,7 @@ project(':vanilla-vertx') {
         compile('org.apache.logging.log4j:log4j-core:2.7')
         compile('com.lmax:disruptor:3.3.6') // for asynch logging
     }
+
 }
 
 project(':vanilla-spring-boot') {
@@ -83,7 +97,7 @@ project(':benchmarks') {
         // > Below options fix the issue regarding <failed to invoke the VM, caught IOException: Cannot run program "$JAVA_HOME\java.exe": CreateProcess error=206, The filename or extension is too long>
         verbosity = 'EXTRA'
         jvmArgs = ['-Djmh.separateClasspathJAR=true']
-        include = '.*SpringBoot20xBenchmark.*'
+        include = '.*Benchmark.*'
 
         // > JMH Settings
         //warmupIterations = 2
@@ -101,6 +115,7 @@ project(':benchmarks') {
 
     dependencies {
         compile("org.openjdk.jmh:jmh-core:${jmhVersion}")
+        // > Not needed this since it is already covered by the jmh-gradle-plugin:jmhCompileGeneratedClasses task
         //compile("org.openjdk.jmh:jmh-generator-annprocess:${jmhVersion}")
     }
 }
