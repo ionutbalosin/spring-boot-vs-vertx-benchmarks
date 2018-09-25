@@ -2,8 +2,9 @@ package org.ib.vertx.vanillavertx;
 
 import io.vertx.core.*;
 import io.vertx.core.http.HttpServer;
-
 import org.apache.log4j.Logger;
+
+import java.lang.management.ManagementFactory;
 
 public class VanillaVertxApplication extends AbstractVerticle {
 
@@ -45,6 +46,9 @@ public class VanillaVertxApplication extends AbstractVerticle {
             }
         });
         logger.info("Verticle Started");
+        logger.info("JVM running for " + (ManagementFactory.getRuntimeMXBean().getUptime() / 1000.0) + " sec");
+        System.out.println("Forcing a normal application shutdown ...");
+        System.exit(1);
     }
 
     @Override

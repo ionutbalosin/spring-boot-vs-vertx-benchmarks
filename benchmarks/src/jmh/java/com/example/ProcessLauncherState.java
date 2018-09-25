@@ -41,11 +41,11 @@ public class ProcessLauncherState {
 		this.args = new ArrayList<>();
 		this.args.add(System.getProperty("java.home") + "/bin/java.exe");
 		this.args.add("-Xmx128m");
-		this.args.add("-Djava.security.egd=file:/dev/./urandom"); // http://ruleoftech.com/2016/avoiding-jvm-delays-caused-by-random-number-generation
+		// http://ruleoftech.com/2016/avoiding-jvm-delays-caused-by-random-number-generation
+		this.args.add("-Djava.security.egd=file:/dev/./urandom");
 		String vendor = System.getProperty("java.vendor", "").toLowerCase();
 		if (vendor.contains("ibm") || vendor.contains("j9")) {
-			this.args.addAll(Arrays.asList("-Xms32m", "-Xquickstart", "-Xshareclasses",
-					"-Xscmx128m"));
+			this.args.addAll(Arrays.asList("-Xms32m", "-Xquickstart", "-Xshareclasses", "-Xscmx128m"));
 		}
 		else {
 			this.args.addAll(Arrays.asList("-XX:TieredStopAtLevel=1"));
@@ -55,7 +55,6 @@ public class ProcessLauncherState {
 			this.args.addAll(4,
 					Arrays.asList(System.getProperty("bench.args").split(" ")));
 		}
-		//System.out.println("CURRENT_ABSOLUTE_PATH=" + new File(".").getAbsolutePath());
 		this.home = new File(dir);
 	}
 
@@ -95,6 +94,7 @@ public class ProcessLauncherState {
 		if (!"false".equals(System.getProperty("debug", "false"))) {
 			System.err.println("Running: " + Utils.join(args, " "));
 		}
+        System.out.println("Starting application ");
 		started = builder.start();
 		monitor();
 	}
@@ -103,7 +103,7 @@ public class ProcessLauncherState {
 	}
 
 	protected void monitor() throws IOException {
-		System.out.println(output(started.getInputStream(), "Started"));
+		System.out.println(output(started.getInputStream(), "Forcing a normal application shutdown"));
 	}
 
 	protected static String output(InputStream inputStream, String marker)
